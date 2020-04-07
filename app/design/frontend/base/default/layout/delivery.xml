@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <delivery_index_index>
+        <reference name="content">
+            <block type="delivery/delivery" name="delivery" template="delivery/delivery.phtml" />
+        </reference>
+    </delivery_index_index>
+    <checkout_onepage_index>   <!--here we add the js and css which are use for the datepicker-->   
+    <reference name="head">
+            <action method="addItem">
+                <type>js_css</type>
+                <name>calendar/calendar-win2k-1.css</name>
+            </action>
+            <action method="addItem">
+                <type>js</type>
+                <name>calendar/calendar.js</name>
+            </action> 
+            <action method="addItem">
+                <type>js</type>
+                <name>calendar/calendar-setup.js</name>
+            </action> 
+            <action method="addItem">
+                <type>js</type>
+                <name>delivery/delivery.js</name>
+            </action> 
+             <block type="core/html_calendar" name="html_calendar" as="html_calendar" template="page/js/calendar.phtml"/> 
+        </reference>
+      </checkout_onepage_index>
+     <sales_order_view> <!--rewrite the sales_order_view to new teplate delivery.phtml-->
+        <reference name="my.account.wrapper">
+            <block type="delivery/delivery" name="custom.order" template="delivery/delivery.phtml" after='sales.order.info' />
+        </reference>
+    </sales_order_view> 
+    <checkout_onepage_additional>        
+        <reference name="root">           
+            <action method="setTemplate">                   
+                <template>customdate/onepage/shipping_method/additional.phtml</template>           
+            </action>   
+            <block type="delivery/delivery" name='date_interval' template="delivery/timeinterval.phtml" before="html_calendar"/>    
+        </reference> 
+       <block type="core/html_calendar" name="html_calendar" as="html_calendar" template="page/js/calendar.phtml"/>         
+    </checkout_onepage_additional>   
+
+</layout> 
+
+

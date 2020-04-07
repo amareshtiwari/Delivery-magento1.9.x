@@ -1,0 +1,209 @@
+
+<?php if (!$this->getQuote()->isVirtual()): ?>
+    <?php echo $this->helper('giftmessage/message')->getInline('onepage_checkout', $this->getQuote(), $this->getDontDisplayContainer()) ?>
+<?php endif; ?>
+<!--this is for the datepicker ,show the date picker on the shipping method -->
+<?php
+$ismandatory = $this->getIsMandatory();
+$maxdel = $this->getMaxInterval();
+$current = $this->getCurrentDate();
+$currentdate = $current->toString('d');
+$currenttime = $current->toString('H');
+$currentmonth = $this->getCurrentMonth();
+?>
+<?php //if ($ismandatory == 1) {?>
+ 
+<ul>
+    <li style="line-height: 35px;">
+        <label class="datepicker-label" for="datepicker" ><?php echo $this->__('Delivery Date:') ?></label>
+        <input type='text'  name='shipdate' id="deliverydate"  class="<?php if ($ismandatory == 1) {echo 'input-text required-entry';}?>">
+    </li>
+    <li style="line-height: 35px;">
+        <label class="" for="delivery time"><?php echo $this->__('Delivery Time:') ?></label>
+        <?php echo $this->getChildHtml('date_interval'); ?><!--show the dropdown of timeinterval-->
+    </li>
+    <li style="line-height: 35px;">
+        <!--getDeliveryComment() show the delivery comment-->
+        <label class="" for="timeinterval"><?php echo $this->__('Delivery Comment:') ?></label>
+    </li>
+    <li style="line-height: 35px;">
+        <textarea  class="<?php if ($ismandatory == 1) {echo 'input-text required-entry';}?>" style="width: 225px;height: 60px;" type="textarea" name="deliverycomment" placeholder="<?php echo $this->__('You can put your comment here'); ?>"></textarea> 
+    </li>
+    <li style="line-height: 35px;">
+      <?php  /*
+ * getDeliveryComment() show the delivery comment which is written by admin in delivery setting in system->confige
+ */ ?>
+        <?php echo $deliverycomment = $this->getDeliveryComment(); ?>
+        
+    </li>
+</ul>
+ 
+
+
+
+<?php
+$date = $this->getMinDeliveryInterval();
+$year = $date->toString('Y');
+$month = $date->toString('M');
+$date = $date->toString('d');
+
+$datem = $this->getMaxDeliveryInterval();
+$yearmax = $datem->toString('Y');
+$monthmax = $datem->toString('M');
+$datemax = $datem->toString('d');
+
+$maxtimesameday = $this->getMaxTimeSameDay();
+$maxhourfornextday = $this->getMaxHourForNextDay();
+
+
+$allday = $this->getDeliveryDisplaysetting();
+$alldisabledates = $this->getDeliveryDisableDates();
+$dateintervaldisplay = $this->getDeliveryDisableDateInterval();
+$timeintervaldisplay = $this->getDeliveryDisableTimeInterval();
+$datetimeintervaldisplay=$this->getDeliveryDisableDateTimeInterval();
+$displayformat=$this->getDisplayFormatTime();
+?>  
+
+
+<script type="text/javascript">
+    displayFormat(<?php echo $displayformat ; ?>);
+    timeIntervalArray(<?php echo json_encode($timeintervaldisplay); ?>)
+    timeDateIntervalArray(<?php echo json_encode($datetimeintervaldisplay); ?>)
+    Calendar.setup({inputField: 'deliverydate', ifFormat: '%m/%e/%Y', button: 'date_from_trig', align: 'Bl', singleClick: true,
+        disableFunc: function(date) {
+            var currentDate = new Date();
+            var day = currentDate.getDate();
+            var month = currentDate.getMonth() + 1;
+            var year = currentDate.getFullYear();
+            var dmy = day + "/" + month + "/" + year;
+            this.currentDateEl = dmy;
+            if (<?php echo $year; ?>) {
+                if (date.getFullYear() === <?php echo $year; ?>) {
+                    if (date.getMonth() === <?php echo ($month - 1); ?>) {
+                        if (date.getDate() < <?php echo $date; ?>) {
+                            return true;
+                        }
+                    }
+                    else if (date.getMonth() > <?php echo $month - 1; ?>) {
+                    }
+                    else {
+                        return true;
+                    }
+                }
+                else if (date.getFullYear() > <?php echo $year; ?>) {
+                }
+                else {
+                    return true;
+                }
+            }
+            if (<?php echo $maxdel ?> > 0) {
+                if (date.getFullYear() === <?php echo $yearmax; ?>) {
+                    if (date.getMonth() === <?php echo ($monthmax - 1); ?>) {
+                        if (date.getDate() > <?php echo $datemax; ?>) {
+                            return true;
+                        }
+                    }
+                    else if (date.getMonth() > <?php echo $monthmax - 1; ?>) {
+                        return true;
+                    }
+                    else if (date.getMonth() === <?php echo $monthmax - 2; ?>) {
+                        if (date.getDate() < <?php echo $currentdate; ?>) {
+                            return true;
+                        }
+                    }
+                    else {
+                        return true;
+                    }
+                }
+                else if (date.getFullYear() > <?php echo $yearmax; ?>) {
+                    return true;
+                }
+                else {
+                    return true;
+                }
+            }
+            if (<?php echo $maxtimesameday; ?> === 1) {
+                if (date.getMonth() === <?php echo $currentmonth - 1; ?>)
+                {
+                    if (date.getDate() === <?php echo $currentdate; ?>) {
+                        return true;
+                    }
+                }
+            }
+            /*
+             * this is form max hour for next day  , if 1 then disable next day
+             */
+            if (<?php echo $maxhourfornextday; ?> === 1)
+            {
+                if (date.getMonth() == <?php echo $currentmonth - 1; ?>) {
+                    if (date.getDate() === <?php echo $currentdate + 1; ?>) {
+                        return true;
+                    }
+                }
+            }
+            /*
+             * this is for all days display setting  according to rule which is created in admin
+             */
+            var js_array =<?php echo json_encode($allday); ?>;
+            if (js_array !== undefined || js_array !== null || js_array.length !== 0) {
+
+                for (var i = 0; i < js_array.length; i++) {
+                    if (date.getDay() == parseInt(js_array[i])) {
+                        return true;
+                    }
+
+                }
+            }
+
+            /*
+             * this is for all dates display setting  according to rule which is created in admin
+             */
+            var datearray =<?php echo json_encode($alldisabledates); ?>;
+            if (datearray !== undefined || datearray !== null || datearray.length !== 0) {
+
+                for (var i = 0; i < datearray.length; i++) {
+                    var dates = new Date(datearray[i]);
+                    if (date.getFullYear() === dates.getFullYear()) {
+                        if (date.getMonth() === dates.getMonth()) {
+                            if (date.getDate() === dates.getDate()) {
+                                return true;
+                            }
+                        }
+                    }
+
+                }
+            }
+            /*
+             * this is for all dateintervals display setting  according to rule which is created in admin
+             */
+            var dateinterval =<?php echo json_encode($dateintervaldisplay); ?>;
+            if (dateinterval !== undefined || dateinterval !== null || dateinterval.length !== 0) {
+
+                var array1 = dateinterval[0];
+                var array2 = dateinterval[1];
+                /*
+                 * create multidimensional array to , two simple array and create two date object for all 
+                 * array values ,  array first hold the starting of inter val like array1[0] the array2[0]
+                 * is end interval date , this for loop for all values 
+                 */
+                for (var i = 0; i < array1.length; i++) {
+
+                    var datearray1 = new Date(array1[i]);
+                    var datearray2 = new Date(array2[i]);
+                    datearray1.setHours(date.getHours(), date.getMinutes(), date.getSeconds());
+                    datearray2.setHours(date.getHours(), date.getMinutes(), date.getSeconds());
+                    if ((date >= datearray1) && (date <= datearray2)) {
+                        return true;
+                    }
+                }
+
+            }
+
+
+        }
+    });
+</script> 
+
+
+<?php //} ?>
+

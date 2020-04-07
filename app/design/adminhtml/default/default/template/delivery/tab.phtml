@@ -1,0 +1,100 @@
+<?php
+$custom = $this->getDeliveryItem();
+$displayformat = $this->getDisplayFormatTime();
+$timeinterval = $this->timeInterval();
+
+if (!empty($custom['codesbug_delivery_date']) || !empty($custom['codesbug_delivery_comment'])):
+?>
+
+    <div class="box-right" style="float:right">
+        <div class="entry-edit">
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-shipping-method"><?php echo Mage::helper('sales')->__('Delivery Information') ?></h4>
+                <div class="tools"><a href="" class="editdeliveryitem">Edit</a></div>
+            </div>
+            <fieldset>
+                <table cellspacing="0" class="form-list" id="orderedit" >
+
+                    <tr>
+                        <td style="width:10%" class="label"><strong><?php echo $this->__('Delivery Date:'); ?></strong></td>
+                        <td class="value"><?php echo $custom['codesbug_delivery_date']; ?></td>
+                    </tr>
+                    <tr>
+                        <td style="width:10%" class="label"><strong><?php echo $this->__('Delivery Time:'); ?></strong></td>
+                        <td class="value"><?php
+if (!empty($custom['codesbug_delivery_timefirst'])) {
+    echo $custom['codesbug_delivery_timefirst'] . '-' . $custom['codesbug_delivery_timelast'];
+}
+?></td>
+                    </tr>
+                    <tr>
+                        <td style="width:30%" class="label"><strong><?php echo $this->__('Delivery Comment:'); ?></strong></td>
+                        <td class="value"><?php echo $custom['codesbug_delivery_comment']; ?></td>
+                    </tr>
+
+                </table>
+
+
+    <?php $id = $this->getRequest()->getParam('order_id');?>
+
+                <form method="post"  id="contact_submit" action='<?php echo $this->getUrl('delivery/index/editorder') . 'orderid/' . $this->getRequest()->getParam('order_id'); ?>'>
+                    <table cellspacing="0" class="form-list" id="editdeliveryform" style="display:none;">
+                        <tr style="line-height: 2;">
+                            <td>
+                                <label class="label" for="datepicker"><strong><?php echo $this->__('Deliver date:') ?></strong></label>
+                            </td>
+                            <td>
+                                <input type='text'  name='codesbug_delivery_date'  id='deliverydate' value="<?php echo $custom['codesbug_delivery_date']; ?>" readonly/>
+                            </td>
+                        </tr>
+                        <tr style="line-height:2.5;">
+                            <td>
+                                <label class="label" for="datepicker"><strong><?php echo $this->__('Deliver Time:') ?></strong></label>
+                            </td>
+                            <td>
+                                <select  name='time_interval'  id='delicerytimeedit' class="input-text required-entry">
+                                    <option value="">--- Select Time Interval ---</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr style="line-height:2.5;">
+                            <td>
+                                <label class="label" for=""><strong><?php echo $this->__('Delivery Comment:') ?></strong></label>
+                            </td>
+                            <td>
+                                <textarea name='deliverycomment' style=" border-radius: 5px;height: 50px;vertical-align: top;width: 220px;"><?php echo $convert = str_replace("<br/>", "\n", $custom['codesbug_delivery_comment']); ?></textarea>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="padding-top:5px;">
+                                <label class="label" for=""><strong><?php echo $this->__('Store Comment:') ?></strong></label>
+                            </td>
+                            <td style="padding-top:5px;">
+                                <textarea name='storecomment' style=" border-radius: 5px;height: 50px;vertical-align: top;width: 220px;"></textarea>
+                            </td>
+                        </tr>
+                        <tr >
+                            <td style="padding-top:5px;">
+                                <label class="label" for=""><strong><?php echo $this->__('Notify Customer By Email:') ?></strong></label>
+                            </td>
+                            <td style="padding-top:5px;">
+                                <input type="checkbox" name="notifyemail" value=""><br>
+                            </td>
+                        </tr>
+
+                        <tr><td><button class="submitdelivery">submit</button></td></tr>
+                    </table>
+                </form>
+
+            </fieldset>
+
+        </div>
+    </div>
+    <script type="text/javascript">
+        displayFormat(<?php echo $displayformat; ?>);
+        timeIntervalAdmin(<?php echo $timeinterval; ?>);
+        Calendar.setup({inputField: 'deliverydate', ifFormat: '%m/%e/%y', button: 'date_from_trig', align: 'Bl', singleClick: true});
+    </script>
+<?php endif;?>
+
+

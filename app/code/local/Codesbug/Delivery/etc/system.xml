@@ -1,0 +1,154 @@
+<?xml version="1.0"?>
+<config>
+    <tabs> <!--create new tabe datetave-->
+        <datetabe translate="label" module="delivery">
+            <label>Codesbug</label>
+            <sort_order>1</sort_order>
+        </datetabe>
+    </tabs>
+    <sections><!---Add section to the tab datescetion-->
+        <datesection translate="label" module="delivery">
+            <class>separator-top</class>
+            <label>Delivery</label>
+            <tab>datetabe</tab>
+            <sort_order>130</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups><!--create group date-->
+                <date translate="label">
+                    <label>Delivery Configuration</label>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                   
+                    <fields>
+                        <ismandatory translate="label">
+                            <label>Is Mandatory</label>
+                            <frontend_type>select</frontend_type>
+                            <comment>Whether its compulsory for user to select delivery date/time in checkout or it can be skipped</comment>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>260</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>	
+                            <show_in_store>1</show_in_store>
+                        </ismandatory>
+                        <timezonecustom translate="label">
+                            <label>System Timezone</label>
+                            <frontend_type>text</frontend_type>
+                            <frontend_model>delivery/adminhtml_system_config_form_field_timezone</frontend_model>
+                            <comment>Timezone is used for all date and time calculation and is a very important setting. Make sure this is correct and corresponds to your location Timezone. This can be changed from System Configuration -> General -> Locale Options -> Timezone</comment>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </timezonecustom>
+                        <mindeliveryinterval translate="label">
+                            <label>Minimum Delivery Interval (days)</label>
+                            <frontend_type>text</frontend_type>   <!-- This time field type is text field -->
+                            <comment>The minimum number of days you need to make a delivery or preparing order. e.g If you set 2 here, date picker in checkout page will have current date and next date disabled. Setting 0 will have current date enabled</comment>
+                            <sort_order>240</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </mindeliveryinterval>
+                        <maxdeliveryinterval translate="label">
+                            <label>Maximum Delivery Interval (days)</label>
+                            <frontend_type>text</frontend_type>   <!-- This time field type is text field -->
+                            <comment>This sets the maximum of days in advance, customer can select a delivery date. e.g If you put in 7 here, it will show t + 7 in the date picker on checkout page. Setting 0 will show all future days</comment>
+                            <sort_order>220</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </maxdeliveryinterval>
+                        <maxtimesameday translate="label">
+                            <label>Cut Off Time For Same Day Delivery</label>
+                            <frontend_type>select</frontend_type>
+                            <comment>Time Selected here represents the Cut Off time before which same day delivery will show. e.g If you have selected 2pm here, after 2:00pm current date will be disabled for delivery</comment>    
+                            <source_model>delivery/hours</source_model>
+                            <sort_order>120</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </maxtimesameday>
+                        <maxhourfornextday translate="label">
+                            <label>Cut Off Time For Next Day Delivery</label>
+                            <frontend_type>select</frontend_type>
+                            <comment>Select the time here after which even next day delivery should not show up in date picker. e.g Selecting 10pm here will disable next day from date picker, if order time is after 10pm. Select 0 for no cut off time</comment>    
+                            <source_model>delivery/hours</source_model>
+                            <sort_order>200</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </maxhourfornextday>
+                        <timeinterval translate="label">
+                            <label>Time Interval(min) </label>
+                            <frontend_type>text</frontend_type>
+                            <comment>This is number of minutes we skip between delivery time. e.g 60 minutes would show 1:00 - 2:00am , 2:00 - 3:00am in time dropdown on checkout page similarly 30minutes would show 1:00 - 1:30am, 1:30 - 2:00am</comment>    
+                            <sort_order>99</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </timeinterval>
+                        <deliverycomment translate="label">
+                            <label>Delivery Comment:</label>
+                            <frontend_type>textarea</frontend_type>    
+                            <sort_order>99</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </deliverycomment>
+                        <showdeliverydatetime translate="label">
+                            <label> Show Delivery Date/Time in Order Grid</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>300</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>	
+                            <show_in_store>1</show_in_store>
+                        </showdeliverydatetime>
+                        <showdeliverycomment translate="label">
+                            <label> Show Delivery Comment in Order Grid</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>320</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>	
+                            <show_in_store>1</show_in_store>
+                        </showdeliverycomment>
+                        <timebuffersameday translate="label">
+                            <label>Time Buffer For Same Day Delivery (minutes)</label>
+                            <frontend_type>text</frontend_type>
+                            <comment>Specify here the minimum number of minutes you need to prepare order. Setting 30 here means, minimum delivery time user can select will be 30 + current time</comment>    
+                            <sort_order>340</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </timebuffersameday>
+                        <timedisplayformat translate="label">
+                            <label>Display Format</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>delivery/format</source_model>
+                            <comment>Display format for time dropdown on checkout page.</comment>
+                            <sort_order>360</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </timedisplayformat>
+                        <displaycommentinpdf translate="label">
+                            <label> Display Delivery Comment In PDF</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>380</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>	
+                            <show_in_store>1</show_in_store>
+                        </displaycommentinpdf>
+                    </fields>
+                 
+                </date>
+            </groups>
+        </datesection>
+    </sections>
+</config>

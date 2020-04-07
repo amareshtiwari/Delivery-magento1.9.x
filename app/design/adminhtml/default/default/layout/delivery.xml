@@ -1,0 +1,73 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_sales_order_view>
+        <reference name="head">
+            <action method="addItem">
+                <type>js</type>
+                <name>delivery/delivery.js</name>
+            </action> 
+        </reference>
+    </adminhtml_sales_order_view>
+    <delivery_adminhtml_delivery_edit>
+        <reference name="head">
+            <action method="addItem">
+                <type>js</type>
+                <name>delivery/delivery.js</name>
+            </action> 
+        </reference>
+    </delivery_adminhtml_delivery_edit>
+    <delivery_adminhtml_delivery_index>
+        <reference name="content">
+            <block type="delivery/adminhtml_delivery" name="delivery" />
+        </reference>
+    </delivery_adminhtml_delivery_index>
+    <adminhtml_sales_order_view>
+        <reference name="order_tab_info">
+            <action method='setTemplate'>
+                <template>custom/sales/order/tab/info.phtml</template>
+            </action>
+            <block type="delivery/adminhtml_delivery" name="delivery.tab" template='delivery/tab.phtml'/>
+            
+        </reference>
+    </adminhtml_sales_order_view>
+    <adminhtml_sales_order_invoice_new>
+        <reference name="form">
+            <action method='setTemplate'>
+                <template>custom/sales/order/invoice/create/form.phtml</template>
+            </action>
+            <block type="delivery/adminhtml_delivery" name="delivery.tab" template='delivery/tab.phtml'/>
+        </reference>
+    </adminhtml_sales_order_invoice_new>
+    <adminhtml_sales_order_creditmemo_new>
+        <reference name="form">
+            <action method='setTemplate'>
+                <template>custom/sales/order/creditmemo/create/form.phtml</template>
+            </action>
+            <block type="delivery/adminhtml_delivery" name="delivery.tab" template='delivery/tab.phtml'/>
+        </reference>
+    </adminhtml_sales_order_creditmemo_new>
+    <adminhtml_sales_order_shipment_new>
+        <reference name="form">
+            <action method='setTemplate'>
+                <template>custom/sales/order/shipment/create/form.phtml</template>
+            </action>
+            <block type="delivery/adminhtml_delivery" name="delivery.tab" template='delivery/tab.phtml'/>
+        </reference>
+    </adminhtml_sales_order_shipment_new>
+    <adminhtml_sales_order_invoice_view>
+        <reference name="form">
+            <action method='setTemplate'>
+                <template>custom/sales/order/invoice/view/form.phtml</template>
+            </action>
+            <block type="delivery/adminhtml_delivery" name="delivery.invoice" template='delivery/invoice.phtml'/>
+        </reference>
+    </adminhtml_sales_order_invoice_view>
+    <adminhtml_sales_order_shipment_view>
+        <reference name="form">
+            <action method='setTemplate'>
+                <template>custom/sales/order/shipment/view/form.phtml</template>
+            </action>
+            <block type="delivery/adminhtml_delivery" name="delivery.shipment" template='delivery/shipment.phtml'/>
+        </reference>
+    </adminhtml_sales_order_shipment_view>    
+</layout>

@@ -1,0 +1,38 @@
+<?php
+$custom = $this->getShipmentItems();
+$timeinterval = $this->timeInterval();
+
+if (!empty($custom['codesbug_delivery_date']) || !empty($custom['codesbug_delivery_comment'])):
+?>
+    <div class="box-right" style="float:right">
+            <div class="entry-edit">
+                <div class="entry-edit-head">
+                    <h4 class="icon-head head-shipping-method"><?php echo Mage::helper('sales')->__('Delivery Information') ?></h4>
+
+                </div>
+                <fieldset>
+    <table cellspacing="0" class="form-list">
+
+        <tr>
+            <td style="width:50%" class="label"><strong><?php echo $this->__('Delivery Date:'); ?></strong></td>
+            <td class="value"><?php echo $custom['codesbug_delivery_date']; ?></td>
+        </tr>
+        <tr>
+            <td style="width:50%" class="label"><strong><?php echo $this->__('Delivery Time:'); ?></strong></td>
+            <td class="value"><?php if (!empty($custom['codesbug_delivery_timefirst'])) {echo $custom['codesbug_delivery_timefirst'] . '-' . $custom['codesbug_delivery_timelast'];}?></td>
+        </tr>
+        <tr>
+            <td style="width:50%" class="label"><strong><?php echo $this->__('Delivery Comment:'); ?></strong></td>
+            <td class="value"><?php echo $custom['codesbug_delivery_comment']; ?></td>
+        </tr>
+
+    </table>
+   </fieldset>
+
+            </div>
+            </div>
+
+
+    <?php
+
+endif?>
